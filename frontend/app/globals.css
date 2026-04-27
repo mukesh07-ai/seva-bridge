@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+
+/* ── Tailwind v4: Custom theme tokens ────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-primary-50:  #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  --color-accent-50:  #ecfdf5;
+  --color-accent-100: #d1fae5;
+  --color-accent-400: #34d399;
+  --color-accent-500: #10b981;
+  --color-accent-600: #059669;
+
+  --color-surface:      #f8fafc;
+  --color-surface-card: #ffffff;
+  --color-surface-dark: #0f172a;
+
+  /* Fonts — use CSS vars injected by next/font/google via layout.tsx */
+  --font-sans:    var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-outfit), var(--font-inter), sans-serif;
+
+  /* Border radius */
+  --radius-xl:  0.875rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  /* Shadows */
+  --shadow-card:    0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --shadow-card-lg: 0 10px 25px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-glow:    0 0 20px 0 rgb(59 130 246 / 0.35);
+
+  /* Animations */
+  --animate-fade-in:    fadeIn 0.4s ease-out;
+  --animate-slide-up:   slideUp 0.4s ease-out;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  /* Keyframes */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.5; }
+  }
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-surface);
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+}
+
+/* ── Utilities ────────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Brand gradient */
+  .gradient-brand {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #1e40af 100%);
+  }
+
+  /* Hero section background */
+  .gradient-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 40%, #ecfdf5 100%);
+  }
+
+  /* Card subtle gradient */
+  .gradient-card {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .glass-dark {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shadow utilities (referenced via Tailwind class names) */
+  .shadow-card    { box-shadow: var(--shadow-card); }
+  .shadow-card-lg { box-shadow: var(--shadow-card-lg); }
+  .shadow-glow    { box-shadow: var(--shadow-glow); }
+
+  /* Font family utilities */
+  .font-sans    { font-family: var(--font-sans); }
+  .font-display { font-family: var(--font-display); }
+
+  /* Hover lift animation for cards */
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+  }
+
+  /* Online indicator dot */
+  .online-dot::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+  }
+
+  /* Animation classes */
+  .animate-fade-in    { animation: var(--animate-fade-in); }
+  .animate-slide-up   { animation: var(--animate-slide-up); }
+  .animate-pulse-slow { animation: var(--animate-pulse-slow); }
+
+  /* Background color utility for surface */
+  .bg-surface { background-color: var(--color-surface); }
+}
+
+/* ── Leaflet map fix ──────────────────────────────────────────────────────── */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  z-index: 0;
+}
